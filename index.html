@@ -88,41 +88,88 @@
         .mute-btn:hover { transform: scale(1.1); }
         .mute-btn svg { width: 22px; height: 22px; fill: white; }
 
-        /* Pantalla Resumen */
-        .theory-box {
-            background-color: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 25px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            border-left: 6px solid var(--blue);
-            color: #333;
-            font-size: 1.05rem;
-            line-height: 1.6;
+        /* --- NUEVO DISEÑO PANTALLA RESUMEN (TEORÍA) --- */
+        .theory-content { 
+            padding: 10px; 
+            margin: 10px 0; 
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        
-        .theory-item {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .theory-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .theory-title {
+        .theory-main-title {
+            text-align: center;
             color: var(--blue-dark);
+            font-size: 1.4rem;
             font-weight: 800;
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            display: block;
-            width: 100%;
+            margin-bottom: 5px;
         }
-
-        .theory-highlight { color: var(--orange); font-weight: 700; }
+        .theory-intro {
+            text-align: center;
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        .change-block {
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .change-block.pure {
+            background: #e6f2ff; /* Azul claro */
+            border: 2px solid var(--blue-600);
+        }
+        .change-block.mixture {
+            background: #fff3e0; /* Naranja claro */
+            border: 2px solid var(--orange);
+        }
+        .block-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pure .block-title { color: var(--blue-700); }
+        .mixture .block-title { color: var(--orange-700); }
+        
+        .block-desc {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        .example-list {
+            list-style: none;
+            padding: 0;
+        }
+        .example-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        .example-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        .pure .example-list li::before { color: var(--blue-600); }
+        .mixture .example-list li::before { color: var(--orange-700); }
+        
+        .example-list strong {
+            color: #000;
+        }
+        .play-btn-container {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 10px;
+        }
 
         /* --- JUEGO 1: COMPLETAR HUECOS --- */
         .fill-game-container { display: flex; flex-direction: column; gap: 1rem; padding: 10px; }
@@ -206,12 +253,12 @@
             80% { transform: translateX(5px); }
         }
 
-        /* --- JUEGO 2: INTERFAZ NUEVA (NATURAL/ARTIFICIAL STYLE) --- */
+        /* --- JUEGO 2: INTERFAZ NUEVA (ESTILO SELECTORES) --- */
         .game2-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
@@ -238,12 +285,16 @@
         }
         .image-display img:hover { transform: scale(1.02); }
         
-        .btn-group {
+        /* Contenedor selectores en línea */
+        .selectors-container {
             display: flex;
+            flex-direction: row;
             gap: 1rem;
             width: 100%;
+            max-width: 500px;
             justify-content: center;
-            flex-wrap: wrap;
+            align-items: flex-end;
+            flex-wrap: nowrap; /* Forzar a mantenerse en línea */
         }
 
         /* Elemento Nombre y Play */
@@ -300,13 +351,151 @@
             100% { transform: translateX(0); }
         }
 
-        /* Colores botones Juego 2 */
-        .btn-pure { background: var(--blue); }
-        .btn-pure:hover { background: var(--blue-dark); }
-        .btn-homo { background: #8e44ad; } /* Púrpura */
-        .btn-homo:hover { filter: brightness(1.1); }
-        .btn-hetero { background: var(--orange); }
-        .btn-hetero:hover { background: var(--orange-700); }
+        /* Lista desplegable hacia arriba - Estilo Modelo */
+        .custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            width: 100%;
+            flex: 1;
+            z-index: 50;
+        }
+        .custom-select {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .custom-select__trigger {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--blue-700);
+            height: 50px;
+            line-height: 50px;
+            background: #fff;
+            border: 2px solid var(--blue-600);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .custom-select__trigger:hover {
+            border-color: var(--orange);
+        }
+        .custom-select__trigger::after {
+            content: '';
+            width: 10px; height: 10px;
+            border-right: 2px solid var(--blue-700);
+            border-bottom: 2px solid var(--blue-700);
+            transform: rotate(45deg);
+            margin-top: -5px;
+            transition: transform 0.2s;
+        }
+        
+        /* Estilo para el botón estático (Sustancia pura) */
+        .static-btn {
+            background: #fff;
+            border: 2px solid var(--blue-600);
+            border-radius: 10px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1.2rem;
+            color: var(--blue-700);
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        /* Drop UP */
+        .custom-options {
+            position: absolute;
+            display: block;
+            bottom: 100%; 
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 2px solid var(--blue-600);
+            border-bottom: 0;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            z-index: 100;
+            height: auto; 
+            overflow: visible; 
+            transform: translateY(10px);
+            transition: all 0.3s;
+        }
+        
+        .custom-select.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+        
+        .custom-select.open .custom-select__trigger::after {
+             margin-top: 5px; transform: rotate(-135deg);
+        }
+        
+        .custom-option {
+            position: relative;
+            display: block;
+            padding: 0 1.2rem;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--blue-700);
+            line-height: 45px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .custom-option:hover {
+            background-color: #e6f2ff;
+            color: var(--orange);
+        }
+        .custom-option.selected {
+            background-color: var(--panel);
+            color: var(--blue-dark);
+            font-weight: 700;
+        }
+        
+        .custom-select__trigger.correct {
+            border-color: var(--green);
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--green);
+        }
+        .custom-select__trigger.wrong {
+            border-color: var(--red);
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--red);
+            animation: shake 0.3s;
+        }
+        
+        .static-btn.correct {
+            border-color: var(--green);
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--green);
+        }
+        .static-btn.wrong {
+            border-color: var(--red);
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--red);
+            animation: shake 0.3s;
+        }
+
+        .action-area {
+            height: 50px; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
 
         /* --- JUEGO 3: TEST --- */
         .test-container { width: 100%; max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; flex: 1; }
@@ -518,31 +707,45 @@
         </div>
     </section>
 
-    <!-- Pantalla Resumen -->
+    <!-- Pantalla Resumen (NUEVO DISEÑO) -->
     <section class="screen" id="summaryScreen">
         <header>
             <h1>Sustancias puras y mezclas</h1>
         </header>
-        <div class="theory-box">
-            <div class="theory-item">
-                <span class="theory-title">Sustancias puras y mezclas.</span>
-                <p>La materia puede presentarse como <span class="theory-highlight">sustancias puras</span> o <span class="theory-highlight">mezclas</span>.</p>
+        <div class="theory-content">
+            <div class="theory-main-title">Clasificación de la materia</div>
+            <p class="theory-intro">La materia puede presentarse como sustancias puras o mezclas.</p>
+            
+            <div class="change-block pure">
+                <div class="block-title">
+                    Sustancias puras
+                </div>
+                <div class="block-desc">
+                    Está compuesta por un solo componente.
+                </div>
+                <ul class="example-list">
+                    <li><strong>Agua:</strong> compuesta únicamente por moléculas de agua.</li>
+                    <li><strong>Hierro:</strong> elemento puro.</li>
+                    <li><strong>Diamante:</strong> carbono puro.</li>
+                </ul>
             </div>
-            <div class="theory-item">
-                <span class="theory-title">Sustancias puras:</span>
-                <p>• Está compuesta por <span class="theory-highlight">un solo componente</span>, como por ejemplo, agua, hierro, diamante, etc.</p>
+
+            <div class="change-block mixture">
+                <div class="block-title">
+                    Mezclas
+                </div>
+                <div class="block-desc">
+                    Están compuestas por varios componentes.
+                </div>
+                <ul class="example-list">
+                    <li><strong>Homogéneas:</strong> no se distinguen los componentes (batido, agua salada, bronce).</li>
+                    <li><strong>Heterogéneas:</strong> sí se distinguen sus componentes (ensalada, granito).</li>
+                </ul>
             </div>
-            <div class="theory-item">
-                <span class="theory-title">Mezclas:</span>
-                <p>• Están compuestas por <span class="theory-highlight">varios componentes</span>. Existen dos tipos de mezclas:</p>
-                <p style="margin-top: 0.5rem; margin-left: 1rem;">
-                    ◦ <strong>Mezclas homogéneas:</strong> <span class="theory-highlight">no se distinguen los componentes</span>, como un batido, agua salada o el bronce.<br>
-                    ◦ <strong>Mezclas heterogéneas:</strong> <span class="theory-highlight">sí se distinguen sus componentes</span>, como una ensalada o el granito.
-                </p>
+
+            <div class="play-btn-container">
+                <button class="btn btn-primary" id="startGameBtn">Jugar</button>
             </div>
-        </div>
-        <div style="text-align: center;">
-            <button class="btn btn-primary" id="startGameBtn">Jugar</button>
         </div>
     </section>
 
@@ -566,7 +769,7 @@
         </div>
     </section>
 
-    <!-- Pantalla Juego 2: Inglés (Nueva Interfaz) -->
+    <!-- Pantalla Juego 2: Inglés (Nueva Interfaz Selectores) -->
     <section class="screen" id="game2Screen" lang="en" translate="no" class="notranslate">
         <header>
             <h1>Pure substances and mixtures</h1>
@@ -590,10 +793,28 @@
                 <img src="" alt="Material" id="game2Img">
             </div>
 
-            <div class="btn-group">
-                <button class="btn btn-pure" id="btnPure">Pure Substances</button>
-                <button class="btn btn-homo" id="btnHomo">Homogeneous</button>
-                <button class="btn btn-hetero" id="btnHetero">Heterogeneous</button>
+            <!-- Nuevo contenedor de selectores en línea -->
+            <div class="selectors-container">
+                <!-- Botón Estático: Sustancia Pura -->
+                <div class="custom-select-wrapper">
+                    <div class="static-btn" id="staticPure">Pure Substances</div>
+                </div>
+
+                <!-- Lista Desplegable: Mezcla -->
+                <div class="custom-select-wrapper">
+                    <div class="custom-select" id="selectMixture">
+                        <div class="custom-select__trigger"><span>Mixture</span></div>
+                        <div class="custom-options">
+                            <span class="custom-option" data-value="homo">Homogeneous</span>
+                            <span class="custom-option" data-value="hetero">Heterogeneous</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <button class="btn btn-primary" id="checkBtnG2">Check</button>
+                <button class="btn btn-primary" id="continueBtnG2" style="display:none;">Continue</button>
             </div>
         </div>
     </section>
@@ -650,7 +871,7 @@
 </div>
 
 <script>
-    /* --- 1. CONFIGURACIÓN DE VARIABLES GLOBALES (CRÍTICO) --- */
+    /* --- 1. CONFIGURACIÓN DE VARIABLES GLOBALES --- */
     const SHEET_NAME = "Pura_mezclas";
     const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwXaTeZczyTg43AjfomeGov1WvmndAxl30YQkuNCk_2kDbQegsO4amWubjl5DBa0QNDgw/exec";
     
@@ -889,7 +1110,6 @@
         "    • En las mezclas homogéneas {no se distinguen} sus componentes, como {un batido}, agua salada o bronce.",
         "    • En las mezclas heterogéneas {sí se distinguen} sus componentes, como {una ensalada} o el granito."
     ];
-    // Palabras: sustancias, un solo componente, diamante, varios componentes, mezclas, no se distinguen, un batido, sí se distinguen, una ensalada. (9 palabras)
     const g1Answers = ["sustancias", "un solo componente", "diamante", "varios componentes", "mezclas", "no se distinguen", "un batido", "sí se distinguen", "una ensalada"];
     
     let selectedWordBankItem = null;
@@ -906,7 +1126,6 @@
         contBtn.classList.add('hidden');
         totalCorrectG1 = 0;
         
-        // Barajar
         const shuffledAnswers = [...g1Answers].sort(() => Math.random() - 0.5);
         
         shuffledAnswers.forEach(word => {
@@ -1052,7 +1271,7 @@
         advanceGameSequence();
     };
 
-    /* --- JUEGO 2: INGLÉS (NUEVA INTERFAZ) --- */
+    /* --- JUEGO 2: INGLÉS (LÓGICA DE SELECTORES MODIFICADA) --- */
     const g2Data = [
         { type: 'pure', text: 'Diamond', img: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/C_MEDIO3/Materia_Eergia/Pure_mixtures/Diamante.png' },
         { type: 'pure', text: 'Water', img: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/C_MEDIO3/Materia_Eergia/Pure_mixtures/water.png' },
@@ -1071,13 +1290,187 @@
     let g2CurrentIndex = 0;
     let g2Questions = [];
     let g2Blocking = false;
+    let g2CurrentSelection = null; // 'pure', 'homo', 'hetero'
+
+    // Elementos DOM Juego 2
+    const selectMixture = document.getElementById('selectMixture');
+    const triggerMixture = selectMixture.querySelector('.custom-select__trigger');
+    const staticPureBtn = document.getElementById('staticPure');
+    const game2Img = document.getElementById('game2Img');
+    const checkBtnG2 = document.getElementById('checkBtnG2');
+    const continueBtnG2 = document.getElementById('continueBtnG2');
 
     function initGame2() {
         g2Questions = [...g2Data].sort(() => Math.random() - 0.5);
         g2CurrentIndex = 0;
         totalCorrectG2 = 0;
         updateProgress('progressFillGame2', 0);
+        
+        // Configurar listeners de los selectores solo una vez
+        setupG2Listeners();
+        
         loadNextQuestionG2();
+    }
+
+    function setupG2Listeners() {
+        // Click en el botón estático
+        staticPureBtn.addEventListener('click', () => {
+            if(g2Blocking) return;
+            reproducirSonidoTap();
+            // Resetear estilos
+            staticPureBtn.classList.remove('correct', 'wrong');
+            triggerMixture.classList.remove('correct', 'wrong');
+            selectMixture.classList.remove('open');
+            triggerMixture.innerHTML = '<span>Mixture</span>'; // Resetear texto mezcla
+            
+            g2CurrentSelection = 'pure';
+            staticPureBtn.style.boxShadow = '0 0 0 3px var(--orange)';
+            triggerMixture.style.boxShadow = 'none';
+        });
+
+        // Click en el trigger de Mezcla
+        triggerMixture.addEventListener('click', () => {
+            if(g2Blocking) return;
+            reproducirSonidoTap();
+            selectMixture.classList.toggle('open');
+            
+            // Si se abre, resetear selección visual
+            if(selectMixture.classList.contains('open')) {
+                staticPureBtn.classList.remove('correct', 'wrong');
+                triggerMixture.classList.remove('correct', 'wrong');
+                staticPureBtn.style.boxShadow = 'none';
+            }
+        });
+
+        // Click en opciones de Mezcla
+        selectMixture.querySelectorAll('.custom-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.stopPropagation(); // Evitar que cierre inmediatamente por el window click
+                
+                if(g2Blocking) return;
+                
+                selectMixture.classList.remove('open');
+                
+                const value = this.getAttribute('data-value');
+                g2CurrentSelection = value;
+                
+                // Actualizar texto del trigger
+                triggerMixture.innerHTML = this.textContent;
+                
+                // Feedback visual
+                staticPureBtn.classList.remove('correct', 'wrong');
+                triggerMixture.classList.remove('correct', 'wrong');
+                staticPureBtn.style.boxShadow = 'none';
+                triggerMixture.style.boxShadow = '0 0 0 3px var(--orange)';
+                
+                reproducirSonidoTap();
+            });
+        });
+
+        // Cerrar si se hace click fuera
+        window.addEventListener('click', (e) => {
+            if (!selectMixture.contains(e.target)) {
+                selectMixture.classList.remove('open');
+            }
+        });
+
+        // Botón Check
+        checkBtnG2.addEventListener('click', checkAnswerG2);
+        // Botón Continue
+        continueBtnG2.addEventListener('click', () => {
+            startGlobalTimer(); // Reanudar timer si estaba parado por error
+            loadNextQuestionG2();
+        });
+    }
+
+    function loadNextQuestionG2() {
+        if (g2CurrentIndex >= g2Questions.length) {
+            advanceGameSequence();
+            return;
+        }
+
+        const q = g2Questions[g2CurrentIndex];
+        const txtEl = document.getElementById('materialNameText');
+        const levelEl = document.getElementById('levelIndicatorG2');
+
+        txtEl.textContent = q.text;
+        game2Img.src = q.img;
+        
+        levelEl.textContent = g2CurrentIndex + 1;
+        
+        // Resetear UI
+        staticPureBtn.className = 'static-btn';
+        staticPureBtn.style.boxShadow = 'none';
+        triggerMixture.className = 'custom-select__trigger';
+        triggerMixture.style.boxShadow = 'none';
+        triggerMixture.innerHTML = '<span>Mixture</span>';
+        
+        g2CurrentSelection = null;
+        g2Blocking = false;
+        
+        checkBtnG2.style.display = 'inline-flex';
+        continueBtnG2.style.display = 'none';
+
+        updateProgress('progressFillGame2', (g2CurrentIndex / TOTAL_QUESTIONS_G2) * 100);
+
+        // Speak text
+        setTimeout(() => {
+            speakTextEnglish(q.text);
+        }, 100);
+    }
+
+    function checkAnswerG2() {
+        if (g2Blocking || !g2CurrentSelection) {
+            if(!g2CurrentSelection) {
+                // Feedback sutil si no hay selección
+                staticPureBtn.classList.add('shake-anim');
+                triggerMixture.classList.add('shake-anim');
+                setTimeout(() => {
+                    staticPureBtn.classList.remove('shake-anim');
+                    triggerMixture.classList.remove('shake-anim');
+                }, 400);
+            }
+            return;
+        }
+        
+        g2Blocking = true;
+        stopTimerForCheck(); // Parar timer durante feedback
+        
+        const currentQ = g2Questions[g2CurrentIndex];
+        const isCorrect = g2CurrentSelection === currentQ.type;
+        
+        if (isCorrect) {
+            reproducirSonidoCorrecto();
+            totalCorrectG2++;
+            
+            // Marcar correcto
+            if (g2CurrentSelection === 'pure') {
+                staticPureBtn.classList.add('correct');
+            } else {
+                triggerMixture.classList.add('correct');
+            }
+            
+            g2CurrentIndex++;
+            updateProgress('progressFillGame2', (g2CurrentIndex / TOTAL_QUESTIONS_G2) * 100);
+            
+            setTimeout(() => {
+                startGlobalTimer();
+                loadNextQuestionG2();
+            }, 500);
+            
+        } else {
+            reproducirSonidoError();
+            
+            // Marcar incorrecto
+            if (g2CurrentSelection === 'pure') {
+                staticPureBtn.classList.add('wrong');
+            } else {
+                triggerMixture.classList.add('wrong');
+            }
+            
+            checkBtnG2.style.display = 'none';
+            continueBtnG2.style.display = 'inline-flex';
+        }
     }
 
     function speakTextEnglish(text) {
@@ -1098,93 +1491,10 @@
         window.speechSynthesis.speak(utterance);
     }
 
-    function loadNextQuestionG2() {
-        if (g2CurrentIndex >= g2Questions.length) {
-            advanceGameSequence();
-            return;
-        }
-
-        const q = g2Questions[g2CurrentIndex];
-        const txtEl = document.getElementById('materialNameText');
-        const imgEl = document.getElementById('game2Img');
-        const levelEl = document.getElementById('levelIndicatorG2');
-
-        txtEl.textContent = q.text;
-        imgEl.src = q.img;
-        
-        levelEl.textContent = g2CurrentIndex + 1;
-        
-        // Reset botones
-        const btnPure = document.getElementById('btnPure');
-        const btnHomo = document.getElementById('btnHomo');
-        const btnHetero = document.getElementById('btnHetero');
-        
-        btnPure.className = 'btn btn-pure';
-        btnHomo.className = 'btn btn-homo';
-        btnHetero.className = 'btn btn-hetero';
-        
-        btnPure.disabled = true;
-        btnHomo.disabled = true;
-        btnHetero.disabled = true;
-        
-        g2Blocking = false;
-        
-        updateProgress('progressFillGame2', (g2CurrentIndex / TOTAL_QUESTIONS_G2) * 100);
-
-        // Speak text after delay
-        setTimeout(() => {
-            speakTextEnglish(q.text);
-            // Desbloquear botones tras un pequeño delay para evitar clicks accidentales dobles
-            setTimeout(() => {
-                btnPure.disabled = false;
-                btnHomo.disabled = false;
-                btnHetero.disabled = false;
-            }, 200);
-        }, 100);
-    }
-
     document.getElementById('playNameBtn').onclick = function() {
         const currentQ = g2Questions[g2CurrentIndex];
         if (currentQ) speakTextEnglish(currentQ.text);
     };
-
-    function checkAnswerG2(userChoice, btnElement) {
-        if (g2Blocking) return;
-        g2Blocking = true;
-        
-        const currentQ = g2Questions[g2CurrentIndex];
-        window.speechSynthesis.cancel();
-        
-        const isCorrect = userChoice === currentQ.type;
-        
-        // Deshabilitar
-        document.getElementById('btnPure').disabled = true;
-        document.getElementById('btnHomo').disabled = true;
-        document.getElementById('btnHetero').disabled = true;
-
-        if (isCorrect) {
-            reproducirSonidoCorrecto();
-            btnElement.classList.add('correct'); // Clase para borde verde si existe en CSS, o usamos style
-            btnElement.style.boxShadow = '0 0 0 4px var(--green)';
-            totalCorrectG2++;
-            g2CurrentIndex++;
-            updateProgress('progressFillGame2', (g2CurrentIndex / TOTAL_QUESTIONS_G2) * 100);
-            setTimeout(loadNextQuestionG2, 300);
-        } else {
-            reproducirSonidoError();
-            btnElement.classList.add('shake-anim');
-            btnElement.classList.add('incorrect'); 
-            btnElement.style.boxShadow = '0 0 0 4px var(--red)';
-            
-            g2CurrentIndex++;
-            updateProgress('progressFillGame2', (g2CurrentIndex / TOTAL_QUESTIONS_G2) * 100);
-            setTimeout(loadNextQuestionG2, 600);
-        }
-    }
-
-    document.getElementById('btnPure').onclick = function() { checkAnswerG2('pure', this); };
-    document.getElementById('btnHomo').onclick = function() { checkAnswerG2('homo', this); };
-    document.getElementById('btnHetero').onclick = function() { checkAnswerG2('hetero', this); };
 
     /* --- JUEGO 3: TEST --- */
     const g3Data = [
@@ -1344,7 +1654,7 @@
         }
     }
 
-    /* --- HALL OF FAME (CORREGIDO) --- */
+    /* --- HALL OF FAME --- */
     let isHofLoading = false;
 
     function loadHallOfFame() {
@@ -1356,22 +1666,17 @@
 
         const url = `${APP_SCRIPT_URL}?action=read&sheet=${SHEET_NAME}`;
 
-        // Añadido cache: 'no-store' para evitar problemas de caché del navegador
         const fetchPromise = fetch(url, { cache: 'no-store' });
         const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
 
         Promise.race([fetchPromise, timeoutPromise])
             .then(r => r.json())
             .then(data => {
-                // Verificación robusta de datos
                 if (data.status === 'success' && data.data) {
                     const processedData = data.data.map(row => {
-                        // Función auxiliar para buscar clave insensible a mayúsculas/minúsculas
                         const getVal = (keys) => {
                             for(let key of keys) {
-                                // Buscar clave exacta
                                 if(row.hasOwnProperty(key) && row[key] !== "") return row[key];
-                                // Buscar clave case-insensitive
                                 const realKey = Object.keys(row).find(k => k.toLowerCase() === key.toLowerCase());
                                 if(realKey && row[realKey] !== "") return row[realKey];
                             }
