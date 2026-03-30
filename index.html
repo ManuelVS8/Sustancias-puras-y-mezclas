@@ -119,11 +119,11 @@
             flex-direction: column;
         }
         .change-block.pure {
-            background: #e6f2ff; /* Azul claro */
+            background: #e6f2ff;
             border: 2px solid var(--blue-600);
         }
         .change-block.mixture {
-            background: #fff3e0; /* Naranja claro */
+            background: #fff3e0;
             border: 2px solid var(--orange);
         }
         .block-title {
@@ -174,7 +174,6 @@
         /* --- JUEGO 1: COMPLETAR HUECOS --- */
         .fill-game-container { display: flex; flex-direction: column; gap: 1rem; padding: 10px; }
         
-        /* Banco de palabras */
         .word-bank {
             display: flex;
             flex-wrap: wrap;
@@ -205,7 +204,6 @@
         .draggable-word.hidden { display: none; }
         .draggable-word.selected { border-color: var(--orange); box-shadow: 0 0 0 2px var(--orange); }
 
-        /* Texto y Huecos */
         .text-paragraph {
             font-size: 1.1rem;
             line-height: 2.2;
@@ -285,7 +283,6 @@
         }
         .image-display img:hover { transform: scale(1.02); }
         
-        /* Contenedor selectores en línea */
         .selectors-container {
             display: flex;
             flex-direction: row;
@@ -294,10 +291,9 @@
             max-width: 500px;
             justify-content: center;
             align-items: flex-end;
-            flex-wrap: nowrap; /* Forzar a mantenerse en línea */
+            flex-wrap: nowrap;
         }
 
-        /* Elemento Nombre y Play */
         .name-display {
             display: flex;
             align-items: center;
@@ -351,7 +347,6 @@
             100% { transform: translateX(0); }
         }
 
-        /* Lista desplegable hacia arriba - Estilo Modelo */
         .custom-select-wrapper {
             position: relative;
             user-select: none;
@@ -394,7 +389,6 @@
             transition: transform 0.2s;
         }
         
-        /* Estilo para el botón estático (Sustancia pura) */
         .static-btn {
             background: #fff;
             border: 2px solid var(--blue-600);
@@ -410,7 +404,6 @@
             width: 100%;
         }
 
-        /* Drop UP */
         .custom-options {
             position: absolute;
             display: block;
@@ -567,7 +560,6 @@
         .score-title{ font-size:1.0rem; color:var(--blue-700); margin-top:1rem; }
         .final-time{ color:var(--blue-700); }
         
-        /* TROFEO */
         #trophyBox { 
             display: none; 
             font-size: clamp(4rem, 10vw, 7rem);
@@ -592,7 +584,6 @@
         @media (max-width: 899px) { .school-logo { width: 140px; max-width: 160px; } }
         @media (max-width: 420px) { .school-logo { width: 110px; max-width: 40%; margin-top: 0.6rem; } }
 
-        /* Modal */
         .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:1000; }
         .modal-content { background:white; padding:2rem; border-radius:15px; width:90%; max-width:400px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.3); }
         .modal-input { width:100%; padding:10px; margin:10px 0; border:2px solid #ddd; border-radius:8px; font-size:1rem; }
@@ -664,7 +655,6 @@
 </head>
 <body>
 <div class="game-container">
-    <!-- Botón de sonido SVG -->
     <button class="mute-btn" id="muteBtn" title="Silenciar/Activar sonido">
         <svg id="speakerIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 9v6h4l5 5V4L7 9H3z"/>
@@ -672,7 +662,6 @@
         </svg>
     </button>
 
-    <!-- Pantalla de Inicio -->
     <section class="screen active" id="startScreen">
         <header>
             <h1>Sustancias puras y mezclas</h1>
@@ -707,7 +696,6 @@
         </div>
     </section>
 
-    <!-- Pantalla Resumen (NUEVO DISEÑO) -->
     <section class="screen" id="summaryScreen">
         <header>
             <h1>Sustancias puras y mezclas</h1>
@@ -749,7 +737,6 @@
         </div>
     </section>
 
-    <!-- Pantalla Juego 1 -->
     <section class="screen" id="game1Screen">
         <header>
             <h1>Sustancias puras y mezclas</h1>
@@ -769,7 +756,6 @@
         </div>
     </section>
 
-    <!-- Pantalla Juego 2: Inglés (Nueva Interfaz Selectores) -->
     <section class="screen" id="game2Screen" lang="en" translate="no" class="notranslate">
         <header>
             <h1>Pure substances and mixtures</h1>
@@ -793,14 +779,11 @@
                 <img src="" alt="Material" id="game2Img">
             </div>
 
-            <!-- Nuevo contenedor de selectores en línea -->
             <div class="selectors-container">
-                <!-- Botón Estático: Sustancia Pura -->
                 <div class="custom-select-wrapper">
                     <div class="static-btn" id="staticPure">Pure Substances</div>
                 </div>
 
-                <!-- Lista Desplegable: Mezcla -->
                 <div class="custom-select-wrapper">
                     <div class="custom-select" id="selectMixture">
                         <div class="custom-select__trigger"><span>Mixture</span></div>
@@ -814,12 +797,10 @@
 
             <div class="action-area">
                 <button class="btn btn-primary" id="checkBtnG2">Check</button>
-                <button class="btn btn-primary" id="continueBtnG2" style="display:none;">Continue</button>
             </div>
         </div>
     </section>
 
-    <!-- Pantalla Juego 3 -->
     <section class="screen" id="game3Screen">
         <header>
             <h1>Elige la opción correcta</h1>
@@ -838,7 +819,6 @@
         </div>
     </section>
 
-    <!-- Pantalla Final -->
     <section class="screen" id="finalScreen">
         <header>
             <h1 class="final-title">Sustancias puras y mezclas</h1>
@@ -879,7 +859,6 @@
     let audioUnlocked = false;
     let isMuted = false;
 
-    // Variables GLOBALES de tiempo y juego
     let startTime = 0;
     let timerInterval = null;
     let elapsed = 0;
@@ -888,11 +867,9 @@
     let finalScoreVal = 0; 
     let finalTimeVal = 0; 
     
-    // ORDEN FIJO DE JUEGOS: 1, 2, 3
     let gameFlowOrder = ['game1', 'game2', 'game3']; 
     let currentGameStep = 0;
 
-    // Acumuladores de aciertos
     let totalCorrectG1 = 0;
     let totalCorrectG2 = 0;
     let totalCorrectG3 = 0;
@@ -900,6 +877,9 @@
     const TOTAL_QUESTIONS_G2 = 12;
     const TOTAL_QUESTIONS_G3 = 5;
     const GRAND_TOTAL_QUESTIONS = TOTAL_QUESTIONS_G1 + TOTAL_QUESTIONS_G2 + TOTAL_QUESTIONS_G3;
+
+    const MIN_ATTEMPTS = 26;
+    let totalAttempts = 0;
 
     /* --- AUDIOS --- */
     const audioUrls = {
@@ -1067,12 +1047,18 @@
         if(el) el.style.width = pct + '%';
     }
 
+    function calcularPuntuacionFinal() {
+        const score = 100 - ((totalAttempts - MIN_ATTEMPTS) * (100 / MIN_ATTEMPTS));
+        return Math.max(0, Math.round(score));
+    }
+
     /* --- LÓGICA DE FLUJO DE JUEGOS --- */
     function initGameSequence() {
         currentGameStep = 0;
         totalCorrectG1 = 0;
         totalCorrectG2 = 0;
         totalCorrectG3 = 0;
+        totalAttempts = 0;
         
         startGlobalTimer();
         loadNextGame();
@@ -1237,6 +1223,7 @@
 
     document.getElementById('checkGame1Btn').onclick = () => {
         stopTimerForCheck();
+        totalAttempts++;
         let correctCount = 0;
         const zones = document.querySelectorAll('.dropzone');
         
@@ -1290,15 +1277,13 @@
     let g2CurrentIndex = 0;
     let g2Questions = [];
     let g2Blocking = false;
-    let g2CurrentSelection = null; // 'pure', 'homo', 'hetero'
+    let g2CurrentSelection = null;
 
-    // Elementos DOM Juego 2
     const selectMixture = document.getElementById('selectMixture');
     const triggerMixture = selectMixture.querySelector('.custom-select__trigger');
     const staticPureBtn = document.getElementById('staticPure');
     const game2Img = document.getElementById('game2Img');
     const checkBtnG2 = document.getElementById('checkBtnG2');
-    const continueBtnG2 = document.getElementById('continueBtnG2');
 
     function initGame2() {
         g2Questions = [...g2Data].sort(() => Math.random() - 0.5);
@@ -1306,35 +1291,29 @@
         totalCorrectG2 = 0;
         updateProgress('progressFillGame2', 0);
         
-        // Configurar listeners de los selectores solo una vez
         setupG2Listeners();
-        
         loadNextQuestionG2();
     }
 
     function setupG2Listeners() {
-        // Click en el botón estático
         staticPureBtn.addEventListener('click', () => {
             if(g2Blocking) return;
             reproducirSonidoTap();
-            // Resetear estilos
             staticPureBtn.classList.remove('correct', 'wrong');
             triggerMixture.classList.remove('correct', 'wrong');
             selectMixture.classList.remove('open');
-            triggerMixture.innerHTML = '<span>Mixture</span>'; // Resetear texto mezcla
+            triggerMixture.innerHTML = '<span>Mixture</span>';
             
             g2CurrentSelection = 'pure';
             staticPureBtn.style.boxShadow = '0 0 0 3px var(--orange)';
             triggerMixture.style.boxShadow = 'none';
         });
 
-        // Click en el trigger de Mezcla
         triggerMixture.addEventListener('click', () => {
             if(g2Blocking) return;
             reproducirSonidoTap();
             selectMixture.classList.toggle('open');
             
-            // Si se abre, resetear selección visual
             if(selectMixture.classList.contains('open')) {
                 staticPureBtn.classList.remove('correct', 'wrong');
                 triggerMixture.classList.remove('correct', 'wrong');
@@ -1342,10 +1321,9 @@
             }
         });
 
-        // Click en opciones de Mezcla
         selectMixture.querySelectorAll('.custom-option').forEach(option => {
             option.addEventListener('click', function(e) {
-                e.stopPropagation(); // Evitar que cierre inmediatamente por el window click
+                e.stopPropagation();
                 
                 if(g2Blocking) return;
                 
@@ -1354,10 +1332,8 @@
                 const value = this.getAttribute('data-value');
                 g2CurrentSelection = value;
                 
-                // Actualizar texto del trigger
                 triggerMixture.innerHTML = this.textContent;
                 
-                // Feedback visual
                 staticPureBtn.classList.remove('correct', 'wrong');
                 triggerMixture.classList.remove('correct', 'wrong');
                 staticPureBtn.style.boxShadow = 'none';
@@ -1367,20 +1343,13 @@
             });
         });
 
-        // Cerrar si se hace click fuera
         window.addEventListener('click', (e) => {
             if (!selectMixture.contains(e.target)) {
                 selectMixture.classList.remove('open');
             }
         });
 
-        // Botón Check
         checkBtnG2.addEventListener('click', checkAnswerG2);
-        // Botón Continue
-        continueBtnG2.addEventListener('click', () => {
-            startGlobalTimer(); // Reanudar timer si estaba parado por error
-            loadNextQuestionG2();
-        });
     }
 
     function loadNextQuestionG2() {
@@ -1398,7 +1367,6 @@
         
         levelEl.textContent = g2CurrentIndex + 1;
         
-        // Resetear UI
         staticPureBtn.className = 'static-btn';
         staticPureBtn.style.boxShadow = 'none';
         triggerMixture.className = 'custom-select__trigger';
@@ -1409,11 +1377,9 @@
         g2Blocking = false;
         
         checkBtnG2.style.display = 'inline-flex';
-        continueBtnG2.style.display = 'none';
 
         updateProgress('progressFillGame2', (g2CurrentIndex / TOTAL_QUESTIONS_G2) * 100);
 
-        // Speak text
         setTimeout(() => {
             speakTextEnglish(q.text);
         }, 100);
@@ -1422,7 +1388,6 @@
     function checkAnswerG2() {
         if (g2Blocking || !g2CurrentSelection) {
             if(!g2CurrentSelection) {
-                // Feedback sutil si no hay selección
                 staticPureBtn.classList.add('shake-anim');
                 triggerMixture.classList.add('shake-anim');
                 setTimeout(() => {
@@ -1434,7 +1399,8 @@
         }
         
         g2Blocking = true;
-        stopTimerForCheck(); // Parar timer durante feedback
+        stopTimerForCheck();
+        totalAttempts++;
         
         const currentQ = g2Questions[g2CurrentIndex];
         const isCorrect = g2CurrentSelection === currentQ.type;
@@ -1443,7 +1409,6 @@
             reproducirSonidoCorrecto();
             totalCorrectG2++;
             
-            // Marcar correcto
             if (g2CurrentSelection === 'pure') {
                 staticPureBtn.classList.add('correct');
             } else {
@@ -1461,15 +1426,25 @@
         } else {
             reproducirSonidoError();
             
-            // Marcar incorrecto
             if (g2CurrentSelection === 'pure') {
                 staticPureBtn.classList.add('wrong');
             } else {
                 triggerMixture.classList.add('wrong');
             }
             
-            checkBtnG2.style.display = 'none';
-            continueBtnG2.style.display = 'inline-flex';
+            setTimeout(() => {
+                staticPureBtn.classList.remove('wrong', 'correct');
+                triggerMixture.classList.remove('wrong', 'correct');
+                
+                staticPureBtn.style.boxShadow = 'none';
+                triggerMixture.style.boxShadow = 'none';
+                triggerMixture.innerHTML = '<span>Mixture</span>';
+                
+                g2CurrentSelection = null;
+                g2Blocking = false;
+                
+                startGlobalTimer();
+            }, 500);
         }
     }
 
@@ -1581,6 +1556,7 @@
     }
 
     function handleAnswerG3(btnClicked, isCorrect, allOptions) {
+        totalAttempts++;
         const buttons = document.querySelectorAll('.test-option-btn');
         buttons.forEach(b => b.disabled = true);
 
@@ -1610,9 +1586,7 @@
         window.speechSynthesis.cancel();
         stopTimerForCheck();
         finalTimeVal = elapsed;
-        
-        const totalHits = totalCorrectG1 + totalCorrectG2 + totalCorrectG3;
-        finalScoreVal = Math.round((100 / GRAND_TOTAL_QUESTIONS) * totalHits);
+        finalScoreVal = calcularPuntuacionFinal();
 
         document.getElementById('finalScore').textContent = finalScoreVal;
         document.getElementById('finalTime').textContent = formatTime(finalTimeVal);
@@ -1796,7 +1770,6 @@
         }
     };
 
-    // Enter key en modal
     document.getElementById('playerSurname').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             document.getElementById('submitScoreBtn').click();
