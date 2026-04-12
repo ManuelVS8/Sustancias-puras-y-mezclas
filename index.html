@@ -878,8 +878,15 @@
     const TOTAL_QUESTIONS_G3 = 5;
     const GRAND_TOTAL_QUESTIONS = TOTAL_QUESTIONS_G1 + TOTAL_QUESTIONS_G2 + TOTAL_QUESTIONS_G3;
 
-    const MIN_ATTEMPTS = 26;
+    // ── PUNTUACIÓN ──────────────────────────────────────────────
+    // Intentos mínimos para un juego perfecto:
+    //   G1: 1 comprobación perfecta
+    //   G2: 12 respuestas correctas (1 intento por elemento)
+    //   G3: 5 respuestas correctas (1 intento por pregunta)
+    //   Total: 18
+    const MIN_ATTEMPTS = 18;
     let totalAttempts = 0;
+    // ────────────────────────────────────────────────────────────
 
     /* --- AUDIOS --- */
     const audioUrls = {
@@ -1047,10 +1054,16 @@
         if(el) el.style.width = pct + '%';
     }
 
+    // ── CÁLCULO DE PUNTUACIÓN ────────────────────────────────────
+    // Fórmula: 100 - ((intentos_realizados - intentos_mínimos) * (100 / intentos_mínimos))
+    // Juego perfecto (18 intentos) → 100 puntos
+    // Cada intento extra resta 100/18 ≈ 5.56 puntos
+    // Mínimo posible: 0 (nunca negativo)
     function calcularPuntuacionFinal() {
         const score = 100 - ((totalAttempts - MIN_ATTEMPTS) * (100 / MIN_ATTEMPTS));
         return Math.max(0, Math.round(score));
     }
+    // ────────────────────────────────────────────────────────────
 
     /* --- LÓGICA DE FLUJO DE JUEGOS --- */
     function initGameSequence() {
@@ -1223,8 +1236,9 @@
 
     document.getElementById('checkGame1Btn').onclick = () => {
         stopTimerForCheck();
-        totalAttempts++;
+
         let correctCount = 0;
+        let incorrectCount = 0;
         const zones = document.querySelectorAll('.dropzone');
         
         zones.forEach(z => {
@@ -1238,8 +1252,14 @@
                 correctCount++;
             } else {
                 z.classList.add('incorrect');
+                incorrectCount++;
             }
         });
+
+        // ── CONTEO G1 ──────────────────────────────────────────
+        // 1 intento base (la comprobación) + 1 extra por cada hueco incorrecto
+        totalAttempts += 1 + incorrectCount;
+        // ───────────────────────────────────────────────────────
 
         totalCorrectG1 = correctCount;
         
@@ -1517,6 +1537,7 @@
 
     let g3CurrentIndex = 0;
     let g3Questions = [];
+    let g3Blocking = false; // evita doble clic mientras se procesa la respuesta
 
     function initGame3() {
         g3Questions = [...g3Data].sort(() => Math.random() - 0.5);
@@ -1524,6 +1545,7 @@
         
         g3CurrentIndex = 0;
         totalCorrectG3 = 0;
+        g3Blocking = false;
         updateProgress('progressFillGame3', 0);
         loadNextQuestionG3();
     }
@@ -1543,42 +1565,55 @@
         levelEl.textContent = `Nivel ${g3CurrentIndex + 1}/${TOTAL_QUESTIONS_G3}`;
         
         optionsContainer.innerHTML = '';
+        g3Blocking = false;
 
-        q.options.forEach((opt, index) => {
+        q.options.forEach((opt) => {
             const btn = document.createElement('button');
             btn.className = 'test-option-btn';
             btn.textContent = opt.text;
-            btn.onclick = () => handleAnswerG3(btn, opt.correct, q.options);
+            btn.onclick = () => handleAnswerG3(btn, opt.correct);
             optionsContainer.appendChild(btn);
         });
 
         updateProgress('progressFillGame3', (g3CurrentIndex / TOTAL_QUESTIONS_G3) * 100);
     }
 
-    function handleAnswerG3(btnClicked, isCorrect, allOptions) {
+    function handleAnswerG3(btnClicked, isCorrect) {
+        // ── Evitar doble clic ──────────────────────────────────
+        if (g3Blocking) return;
+        g3Blocking = true;
+        // ───────────────────────────────────────────────────────
+
+        stopTimerForCheck();
         totalAttempts++;
-        const buttons = document.querySelectorAll('.test-option-btn');
-        buttons.forEach(b => b.disabled = true);
 
         if (isCorrect) {
+            // Respuesta correcta: marcar, avanzar pregunta
             reproducirSonidoCorrecto();
             btnClicked.classList.add('correct');
+            // Deshabilitar todos los botones brevemente para feedback visual
+            document.querySelectorAll('.test-option-btn').forEach(b => b.disabled = true);
             totalCorrectG3++;
+            g3CurrentIndex++;
+
+            setTimeout(() => {
+                startGlobalTimer();
+                loadNextQuestionG3();
+            }, 800);
+
         } else {
+            // Respuesta incorrecta: marcar el error, permitir reintentar
             reproducirSonidoError();
             btnClicked.classList.add('incorrect');
-            allOptions.forEach((opt, idx) => {
-                if(opt.correct) {
-                    buttons[idx].classList.add('correct');
-                }
-            });
-        }
 
-        g3CurrentIndex++;
-        
-        setTimeout(() => {
-            loadNextQuestionG3();
-        }, 1500);
+            setTimeout(() => {
+                // Quitar el marcado de error y desbloquear para que pueda elegir otra opción
+                btnClicked.classList.remove('incorrect');
+                btnClicked.disabled = true; // deshabilitar solo la opción fallida
+                g3Blocking = false;
+                startGlobalTimer();
+            }, 800);
+        }
     }
 
     /* --- FINALIZAR --- */
